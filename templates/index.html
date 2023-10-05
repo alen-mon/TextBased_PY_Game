@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-Based Adventure Game</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, p {
+            text-align: center;
+        }
+
+        /* Style for the main container */
+        #main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 80%; /* Adjust the width as needed */
+            margin: auto;
+        }
+
+        /* Style for the left container (Inventory) */
+        #inventory-container {
+            flex: 1;
+            margin: 10px; /* Adjust margin as needed */
+            padding: 10px; /* Adjust padding as needed */
+            border: 1px solid #ccc;
+        }
+
+        /* Style for the right container (Current Room) */
+        #current-room-container {
+            flex: 1;
+            margin: 10px; /* Adjust margin as needed */
+            padding: 10px; /* Adjust padding as needed */
+            border: 1px solid #ccc;
+        }
+
+        /* Style for the Image div */
+        #image-container {
+            text-align: center;
+            margin-bottom: 20px; /* Add space at the bottom */
+        }
+
+        /* Style for the image itself */
+        #map-image {
+            max-width: 100%; /* Ensure the image doesn't exceed its container */
+        }
+
+        /* Style for the commands container */
+        #commands-container {
+            flex: 1;
+            margin: 10px; /* Adjust margin as needed */
+            padding: 10px; /* Adjust padding as needed */
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text-Based Adventure Game</h1>
+     <form method="POST" action="/restart">
+        <button type="submit">Restart Game</button>
+    </form>
+    <p>{{ message |safe }}</p>
+
+   <form method="POST" action="/" {% if game_over %}disabled{% endif %}>
+    <label for="action">Enter your action:</label>
+    <input type="text" id="action" name="action" required>
+    <button type="submit" {% if game_over %}disabled{% endif %}>Submit</button>
+
+   </form>
+
+    <div id="main-container">
+        <!-- Left container (Inventory) -->
+        <div id="inventory-container">
+            <h2>Inventory</h2>
+            <ul>
+                {% for item in inventory %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Right container (Current Room) -->
+        <div id="current-room-container">
+            <h2>Current Room</h2>
+            <p>{{ current_room }}</p>
+        </div>
+
+        <!-- Commands container -->
+        <div id="commands-container">
+            <h2>Available Commands</h2>
+            <ul>
+                <li>Enter "take [item]" to pick up an item.</li>
+                <li>Enter "use [item]" to use an item.</li>
+                <li>Enter "search room" to explore unlocked rooms.</li>
+                <li>Enter "inventory" to see what you are carrying.</li>
+                <li>Enter "current room" to see your current location.</li>
+                <li>Enter "description" to describe an item.</li>
+                <li>Enter "open chest" to open chest.</li>
+                <li>Enter "quit" to exit the game.</li>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- Image container at the bottom -->
+    <div id="image-container">
+        <img src="/img/Map.png" alt="Map Image" id="map-image">
+    </div>
+</body>
+</html>
